@@ -1,8 +1,9 @@
 package by.htp.lesson05.task03.controller.command;
 
-import by.htp.lesson05.task03.bean.TransferObject;
+import by.htp.lesson05.task03.bean.RequestDTO;
+import by.htp.lesson05.task03.bean.ResultDTO;
 import by.htp.lesson05.task03.controller.exception.ControllerException;
 
 public interface Command {
-	TransferObject execute(TransferObject transferObject) throws ControllerException;
+	ResultDTO execute(RequestDTO requestDTO) throws ControllerException;
 }

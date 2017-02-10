@@ -4,22 +4,25 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
 import java.util.TreeSet;
 
 import by.htp.lesson05.task03.bean.Book;
 import by.htp.lesson05.task03.bean.BookComparatorByPages;
 import by.htp.lesson05.task03.bean.BookComparatorByRating;
 import by.htp.lesson05.task03.bean.BookComparatorByTitle;
-import by.htp.lesson05.task03.bean.TransferObject;
+import by.htp.lesson05.task03.bean.RequestDTO;
+import by.htp.lesson05.task03.bean.ResultDTO;
 import by.htp.lesson05.task03.dao.CommandsDAO;
 import by.htp.lesson05.task03.dao.exception.DAOException;
 
 public class ExeCommandsDAO implements CommandsDAO {
 
 	@Override
-	public TransferObject printAll(TransferObject transferObject) throws DAOException {
-		TreeSet<Book> booksSet = new TreeSet<Book>(new BookComparatorByTitle());
+	public ResultDTO printAll(RequestDTO requestDTO) throws DAOException {
+		Set<Book> booksSet = new TreeSet<Book>(new BookComparatorByTitle());
 		String filePath = "C://temp/BooksList.txt";
+		ResultDTO resultDTO=new ResultDTO();
 		BufferedReader bufferedReader;
 
 		try {
@@ -37,19 +40,20 @@ public class ExeCommandsDAO implements CommandsDAO {
 				rating = Float.parseFloat(lineElements[2]);
 				booksSet.add(new Book(title, pages, rating));
 			}
-			transferObject.setBooksSet(booksSet);
+			resultDTO.setBooksSet(booksSet);
 
 		} catch (IOException e) {
 			throw new DAOException("Problems with file! ");
 		}
 
-		return transferObject;
+		return resultDTO;
 	}
 
 	@Override
-	public TransferObject printPopular(TransferObject transferObject) throws DAOException {
-		TreeSet<Book> booksSet = new TreeSet<Book>(new BookComparatorByRating());
+	public ResultDTO printPopular(RequestDTO requestDTO) throws DAOException {
+		Set<Book> booksSet = new TreeSet<Book>(new BookComparatorByRating());
 		String filePath = "C://temp/BooksList.txt";
+		ResultDTO resultDTO=new ResultDTO();
 		BufferedReader bufferedReader;
 
 		try {
@@ -68,19 +72,20 @@ public class ExeCommandsDAO implements CommandsDAO {
 
 				booksSet.add(new Book(title, pages, rating));
 			}
-			transferObject.setBooksSet(booksSet);
+			resultDTO.setBooksSet(booksSet);
 
 		} catch (IOException e) {
 			throw new DAOException("Problems with file! ");
 		}
 
-		return transferObject;
+		return resultDTO;
 	}
 
 	@Override
-	public TransferObject maxPages(TransferObject transferObject) throws DAOException {
-		TreeSet<Book> booksSet = new TreeSet<Book>(new BookComparatorByPages());
+	public ResultDTO maxPages(RequestDTO requestDTO) throws DAOException {
+		Set<Book> booksSet = new TreeSet<Book>(new BookComparatorByPages());
 		String filePath = "C://temp/BooksList.txt";
+		ResultDTO resultDTO=new ResultDTO();
 		BufferedReader bufferedReader;
 
 		try {
@@ -88,7 +93,7 @@ public class ExeCommandsDAO implements CommandsDAO {
 			String line;
 			String[] lineElements;
 			String title;
-			int pagesLimit = transferObject.getPages();
+			int pagesLimit = requestDTO.getPages();
 			int pages;
 			float rating;
 
@@ -102,12 +107,12 @@ public class ExeCommandsDAO implements CommandsDAO {
 					booksSet.add(new Book(title, pages, rating));
 				}
 			}
-			transferObject.setBooksSet(booksSet);
+			resultDTO.setBooksSet(booksSet);
 
 		} catch (IOException e) {
 			throw new DAOException("Problems with file! ");
 		}
 
-		return transferObject;
+		return resultDTO;
 	}
 }
