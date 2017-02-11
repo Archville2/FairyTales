@@ -4,6 +4,7 @@ import by.htp.lesson05.task03.bean.RequestDTO;
 import by.htp.lesson05.task03.bean.ResultDTO;
 import by.htp.lesson05.task03.dao.CommandsDAO;
 import by.htp.lesson05.task03.dao.factory.DAOFactory;
+import by.htp.lesson05.task03.dao.exception.DAOException;
 import by.htp.lesson05.task03.service.exception.ServiceException;
 
 public class PrintAllService {
@@ -14,7 +15,7 @@ public class PrintAllService {
 
 		try {
 			return commandsDAO.printAll(requestDTO);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
 	}
